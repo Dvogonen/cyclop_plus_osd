@@ -47,6 +47,9 @@
 #define F_BAND_OPTION             10
 #define R_BAND_OPTION             11
 #define L_BAND_OPTION             12
+#define BATTERY_TEXT_OPTION       13
+#define OFFSET_X_OPTION           14
+#define OFFSET_Y_OPTION           15
 
 #define BATTERY_ALARM_DEFAULT     1   /* On    */
 #define ALARM_LEVEL_DEFAULT       5   /* value 1-8   */
@@ -61,14 +64,18 @@
 #define F_BAND_DEFAULT            1   /* On */
 #define R_BAND_DEFAULT            1   /* On */
 #define L_BAND_DEFAULT            1   /* On */
+#define BATTERY_TEXT_DEFAULT      0   /* Off */
+#define OFFSET_X_DEFAULT          0   /* 0 pixels */
+#define OFFSET_Y_DEFAULT          0   /* 0 pixels */
 
-#define MAX_OPTIONS               13
+#define MAX_OPTIONS               16
 
 // User Configuration Commands
-#define TEST_ALARM_COMMAND        13
-#define RESET_SETTINGS_COMMAND    14
-#define EXIT_COMMAND              15
-#define MAX_COMMANDS              3
+#define TEST_ALARM_COMMAND        16
+#define RESET_SETTINGS_COMMAND    17
+#define SET_OFFSET_COMMAND        18
+#define EXIT_COMMAND              19
+#define MAX_COMMANDS              4
 
 // Number of lines in configuration menu
 #define MAX_OPTION_LINES          9
@@ -137,6 +144,6 @@
 // Release information
 #define VER_DATE_STRING           "2017-03-13"
 #define VER_INFO_STRING           "v2.3 by Dvogonen"
-#define VER_EEPROM                240
+#define VER_EEPROM                242
 
 #endif // cyclop_plus_osd_h

@@ -1803,6 +1803,8 @@ const char tableOfAllCharacters[13824] PROGMEM = {
 #define CMD_NEWLINE         13  /* Moves cursor to start of the next line      */
 #define CMD_SET_X           14  /* Position X cursor (next char is a parameter)*/
 #define CMD_SET_Y           15  /* Position Y cursor (next char is a parameter)*/
+#define CMD_SET_OFFSET      16  /* Display Offset XY cursor (next 2 chars are parameters)*/
+
 /*******************************************************************************
    Hardware Defines
  *******************************************************************************/
@@ -1980,6 +1982,10 @@ void loop()
   static bool activeCommand = false;
   static bool waitingForX = false;
   static bool waitingForY = false;
+  static bool waitingForOffsetX = false;
+  static bool waitingForOffsetY = false;
+  static byte offsetX = 0;
+  static byte offsetY = 0;
   long videoUpdateTimer = 0;
   unsigned char inChar;
 
@@ -2007,6 +2013,7 @@ void loop()
           case CMD_NEWLINE:           newLine(); break;
           case CMD_SET_X:             waitingForX = true; break;
           case CMD_SET_Y:             waitingForY = true; break;
+          case CMD_SET_OFFSET:        waitingForOffsetX = true; break;
           default: break;           // Unknown command - Just skip it
         }
         activeCommand = false;
@@ -2018,6 +2025,16 @@ void loop()
       else if (waitingForY) {
         curY = inChar;
         waitingForY = false;
+      }
+      else if (waitingForOffsetX) {
+        offsetX = inChar;
+        waitingForOffsetX = false;
+        waitingForOffsetY = true;
+      }
+      else if (waitingForOffsetY) {
+        offsetY = inChar;
+        waitingForOffsetY = false;
+        osd.setDisplayOffsets(offsetX, offsetY);
       }
       else {
         osd.printMax7456Char( fillState && (inChar > 31) && (inChar < 128) ? inChar + 0x80 : inChar, curX++, curY, blinkState, inverseState );
